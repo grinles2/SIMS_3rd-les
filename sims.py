@@ -110,7 +110,15 @@ class Human:
         print(f"Strength: {self.car.strength}")
 
     def is_alive(self):
-        pass
+        if self.glad < 0:
+            print("в психушку")
+            return False
+        if self.satiety < 0 or self.thirst < 0:
+            print("Пусть земля будет пухом")
+            return False
+        if self.money < - 100:
+            print("Ну всё продадим тебя на органы")
+            return False
 
     def live(self, day):
         pass
