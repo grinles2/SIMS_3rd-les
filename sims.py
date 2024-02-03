@@ -10,7 +10,7 @@ class Human:
         self.car = car
         self.money = 100
         self.glad = 50
-        self.satiety = 50
+        self.satiety = 10
         self.thirst = 10
         self.mess = 0
 
@@ -73,7 +73,7 @@ class Human:
             pass
         else:
             if self.car.fuel < 15:
-                self.shopping("Fuel")
+                self.shopping("fuel")
                 return
             else:
                 self.to_repair()
@@ -94,7 +94,8 @@ class Human:
         self.mess -= 10
 
     def to_repair(self):
-        pass
+        self.money -= 100
+        self.car.strength = 100
 
     def days_indexes(self, day):
         d = f"Today the {day} of {self.name}'s indexes"
@@ -118,7 +119,7 @@ class Human:
         print(f"Fuel: {self.car.fuel}")
         print(f"Strength: {self.car.strength}")
 
-        h_i =f"{self.home} Home indexes"
+        h_i =f" Home indexes"
         print(f"{h_i:=^50}")
         print(f"Mess: {self.home.mess}")  #Дз 2
         print(f"Food: {self.home.food}")
@@ -219,6 +220,6 @@ brands_of_car = {"BMW": {"fuel": 100, "strength": 120, "consumption": 14},
 
 
 nick = Human("Nick")
-for day in range(1, 8):
-    if nick.live(day) == False:       #Ошибка 2
+for day in range(1, 365):
+    if nick.live(day) == False:
         break
