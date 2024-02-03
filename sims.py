@@ -3,16 +3,18 @@ import random
 
 class Human:
     def __init__(self, name="Human", job=None, home=None, car=None):
-#атрибуты
+        # атрибуты
         self.name = name
         self.job = job
         self.home = home
         self.car = car
         self.money = 100
-        self.gladness = 50
+        self.glad = 50
         self.satiety = 50
         self.thirst = 10
-#методы
+        self.mess = 0
+
+    # методы
     def get_home(self):
         self.home = House()
 
@@ -32,13 +34,11 @@ class Human:
             self.satiety += 5
             self.home.food -= 5
 
-
     def drink(self):
         if self.home.water <= 0:
             self.shopping("water")
             self.thirst -= 20
             self.home.water -= 5
-
 
     def shopping(self, manage):
         if self.car.drive():
@@ -62,10 +62,11 @@ class Human:
             print("Водаааа")
             self.money -= 5
             self.home.water += 5
-
-
-
-
+        elif manage == "sweets":
+            print("Ура прыщи")
+            self.glad += 10
+            self.money -= 15
+            self.satiety += 2
 
     def work(self):
         if self.car.drive():
@@ -78,22 +79,35 @@ class Human:
                 self.to_repair()
                 return
         self.money += self.job.salary
-        self.gladness -= self.job.glad
+        self.glad -= self.job.glad
         self.satiety -= 5
         self.thirst -= 2
 
-
     def chill(self):
-        pass
+        print("Ура отдых")
+        self.glad += 20
+        self.money -= 10
+        self.mess += 5
 
-    def clean_house(self):
-        pass
+    def clean_home(self):
+        self.glad -= 10
+        self.mess -= 10
 
     def to_repair(self):
         pass
 
-    def days_indexes(self):
-        pass
+    def days_indexes(self, day):
+        d = f"Today the {day} of {self.name}'s indexes"
+        print(f"{d:=^50}")  # print(f"{d:=^50}") вместо = можно ставить чё хочу
+        human_i = f"{self.name}'s indexes"
+        # дз надо вывести атрибуты класса Human а именно money,glad,satiety,thirst
+        print(f"{human_i:=^50}")
+        print(f"{'Home indexes':=^50}")
+        # вывести атрибуты обьекта класса House 3
+        car_i = f"{self.car.brand} car indexes"
+        print(f"{car_i:=^50}")
+        print(f"Fuel: {self.car.fuel}")
+        print(f"Strength: {self.car.strength}")
 
     def is_alive(self):
         pass
@@ -123,9 +137,7 @@ class House:
     def __init__(self):
         self.mess = 0
         self.food = 0
-        self.water_bill = 0
-        self.energy_bill = 0
-        self.gas_bill = 0
+        self.water = 0
 
 
 class Job:
@@ -137,16 +149,9 @@ class Job:
 
 job_list = {"Python dev": {"salary": 50, "glad": 12},
             "C++ dev": {"salary": 80, "glad": 6},
-            "Php dev": {"salary": 35, "glad": 2}}#
+            "Php dev": {"salary": 35, "glad": 2}}
 
 brands_of_car = {"BMW": {"fuel": 100, "strength": 120, "consumption": 14},
                  "Porsche": {"fuel": 170, "strength": 90, "consumption": 99},
                  "Ferrari": {"fuel": 10, "strength": 100, "consumption": 11},
                  "Lamborghini": {"fuel": 60, "strength": 20, "consumption": 1991}}
-
-
-#h = Human("Volodya")
-#h.get_home()
-#print(h.job)
-#h.get_job()
-#print(h.job.job)
