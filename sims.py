@@ -99,15 +99,30 @@ class Human:
     def days_indexes(self, day):
         d = f"Today the {day} of {self.name}'s indexes"
         print(f"{d:=^50}")  # print(f"{d:=^50}") вместо = можно ставить чё хочу
+
+
         human_i = f"{self.name}'s indexes"
         # дз надо вывести атрибуты класса Human а именно money,glad,satiety,thirst
         print(f"{human_i:=^50}")
         print(f"{'Home indexes':=^50}")
-        # вывести атрибуты обьекта класса House 3
+
+        # ДЗ 1
+        print(f"Money: {self.money}")
+        print(f"Satiety: {self.satiety}")
+        print(f"Thirst: {self.thirst}")
+
+
+        # вывести атрибуты обьекта класса House 3 mess,food,water
         car_i = f"{self.car.brand} car indexes"
         print(f"{car_i:=^50}")
         print(f"Fuel: {self.car.fuel}")
         print(f"Strength: {self.car.strength}")
+
+        h_i =f"{self.home} Home indexes"
+        print(f"{h_i:=^50}")
+        print(f"Mess: {self.home.mess}")  #Дз 2
+        print(f"Food: {self.home.food}")
+        print(f"Water: {self.home.water}")
 
     def is_alive(self):
         if self.glad < 0:
@@ -121,15 +136,50 @@ class Human:
             return False
 
     def live(self, day):
-        pass
-
+        if self.is_alive() == False:
+            return False
+        if self.home is None:
+            print("Мы не бомжи")
+            self.get_home()
+        if self.car is None:
+            self.get_car()
+            print(f"{self.car.brand} Был куплен")
+        if self.job is None:
+            self.get_job()
+            print(f"I working {self.job.job}, salary {self.job.salary}")
+        self.days_indexes(day)
+        dice = random.randint(1,4)
+        if self.satiety < 10:
+            print("Время есть")
+            self.eat()
+        elif self.glad < 5:
+            print("Время чилить")
+            self.chill()
+        elif self.money < 5:
+            print("Бабки всё нема я почти банкрот")
+            self.work()
+        elif self.car.strength < 10:
+            print("Время отвести кучу метала на ТО")
+            self.to_repair()
+        elif dice == 1:
+            print("Чил")
+            self.chill()
+        elif dice == 2:
+            print("АААА дом=свалка свалка есть убрать")
+            self.clean_home()
+        elif dice == 3:
+            print("Чил")
+            self.chill()
+        elif dice == 4:
+            print("Вкусняшкии ням")
+            self.shopping(manage="sweets")
 
 class Auto:
     def __init__(self, brand_list):
         self.brand = random.choice(list(brand_list))
         self.fuel = brand_list[self.brand]["fuel"]
-        self.strength = brand_list[self.brand["strength"]]
-        self.consumption = brand_list[self.brand]["Consumption"]
+        self.strength = brand_list[self.brand]["strength"]
+        self.consumption = brand_list[self.brand]["consumption"]
 
     def drive(self):
         if self.strength > 0 and self.fuel >= self.consumption:
@@ -157,9 +207,18 @@ class Job:
 
 job_list = {"Python dev": {"salary": 50, "glad": 12},
             "C++ dev": {"salary": 80, "glad": 6},
+            "HTML dev": {"salary": 60, "glad": 10},
+            "JS dev": {"salary": 75, "glad": 8},
+            "Java Dev": {"salary": 100, "glad": 10},
             "Php dev": {"salary": 35, "glad": 2}}
 
 brands_of_car = {"BMW": {"fuel": 100, "strength": 120, "consumption": 14},
                  "Porsche": {"fuel": 170, "strength": 90, "consumption": 99},
                  "Ferrari": {"fuel": 10, "strength": 100, "consumption": 11},
                  "Lamborghini": {"fuel": 60, "strength": 20, "consumption": 1991}}
+
+
+nick = Human("Nick")
+for day in range(1, 8):
+    if nick.live(day) == False:       #Ошибка 2
+        break
