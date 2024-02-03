@@ -3,6 +3,7 @@ import random
 
 class Human:
     def __init__(self, name="Human", job=None, home=None, car=None):
+#атрибуты
         self.name = name
         self.job = job
         self.home = home
@@ -11,7 +12,7 @@ class Human:
         self.gladness = 50
         self.satiety = 50
         self.thirst = 10
-
+#методы
     def get_home(self):
         self.home = House()
 
@@ -40,7 +41,31 @@ class Human:
 
 
     def shopping(self, manage):
-        pass
+        if self.car.drive():
+            pass
+        else:
+            if self.car.fuel < 15:
+                self.shopping("Fuel")
+                return
+            else:
+                self.to_repair()
+                return
+        if manage == "fuel":
+            print("Бензин")
+            self.money -= 100
+            self.car.fuel = 100
+        elif manage == "food":
+            print("Жраточки")
+            self.money -= 50
+            self.home.food += 50
+        elif manage == "water":
+            print("Водаааа")
+            self.money -= 5
+            self.home.water += 5
+
+
+
+
 
     def work(self):
         if self.car.drive():
@@ -56,6 +81,8 @@ class Human:
         self.gladness -= self.job.glad
         self.satiety -= 5
         self.thirst -= 2
+
+
     def chill(self):
         pass
 
